@@ -13,14 +13,14 @@ The objective of our product, Chenly Insights, is to help users combat misinform
 
 ## Dataset
 We utilized multiple different data sources to both establish the ground truth and understand factors that indicate misinformation. Generally, the more context and information you give a large language model, it can give more nuanced and thoughtful judgements on a piece of text. The data is as follows: 
-![Picture of liar_plus_data](static/liar_plus_data.png) \
 * **Liar Plus Dataset**: A publicly available dataset containing labeled statements from news sources with contextual information. After preprocessing, we have a dataset of 10,234 rows and 15 columns, with a key truthness labels **six levels from "pants-on-fire" to "true"**. Primarily used in our vector database and predictive AI training.
-![Picture of Politifact Website](static/Politifact_data.png) \
+![Picture of liar_plus_data](static/liar_plus_data.png) 
 * **Politifact Factchecks**: A website that factchecks articles and statements made by leaders. Used to help set the ground truth of a topic.
-![Picture of snopes Website](static/Snoeps_data.png) \
+![Picture of Politifact Website](static/Politifact_data.png) 
 * **Snope Factchecks**: A website that factchecks articles and statements made on the web.
-![Picture of user_input_data](static/user_input_data.png) \
+![Picture of snopes Website](static/Snopes_data.png) 
 * **User-Selected PDFs**: Article links or PDFs are analyzed with this engine and assigned a truthness label afterwards.
+![Picture of user_input_data](static/user_input_data.png) 
 * **SERP API Search Results**: Google search results based on the title of the user-selected articles to provide the veracity engine with more information.
 * **Factuality Factors**: These factors determine the veracity of an article and we analyze four of them for each article: sensationalism, stance detection, social credibility, naive realism. 
 
@@ -30,7 +30,7 @@ Our flowchart in Lucidchart showcasing the data journey thorughout this process.
 
 ## Generative AI Methods
 **Tool: Google Gemini 1.5 Pro 002**
-![Picture of Genai FC](static/GenAI_flowchart.png) \
+![Picture of Genai FC](static/GenAI_flowchart.png) 
 
 Where and how we used it:
 * Extracting key attributes from the user-uploaded text (e.g., speaker, context, title) to support predictive AI modeling.
@@ -50,16 +50,15 @@ Additional information we provide to Gemini in our prompts:
 
 Built and trained different models for different factuality factors
 * **Naive Realism**: used Spacy Textblob and a HuggingFace sentiment analysis model to calculate confidence and subjectivity, and trained the model using an XGBoosted Decision Tree.
-![Picture of PredAI_FC1](static/Naive_realism_fc.png) \
+![Picture of PredAI_FC1](static/Naive_realism_fc.png) 
 * **Social Credibility**: Cleaned Liar Plus Dataset, one hot-encoded the speakers, context, and party affiliation, and finally built and trained a neural network model.
-![Picture of PredAI_FC2](static/social_credibility_fc.png) \
+![Picture of PredAI_FC2](static/social_credibility_fc.png) 
 
 
 ## Results
-We will be adding more graphs/tables over the next week
 ![Picture results](static/accuracy_table.jpg) \
-![Picture results2](static/Naive Realism results.jpg) \
-![Picture results3](static/accuracy_table_for_two_AI_methods.jpg) \
+![Picture results2](static/Naive Realism results.png) \
+![Picture results3](static/accuracy_table_for_two_AI_methods.png) \
 
 
 ## Discussion
