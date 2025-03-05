@@ -57,8 +57,8 @@ Built and trained different models for different factuality factors
 
 ## Results
 ![Picture results](static/accuracy_table.jpg) \
-![Picture results2](static/Naive Realism results.png) \
-![Picture results3](static/accuracy_table_for_two_AI_methods.png) \
+![Picture results2](static/Naive Realism results.png)
+![Picture results3](static/accuracy_table_for_two_AI_methods.png)
 
 
 ## Discussion
