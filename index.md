@@ -13,14 +13,14 @@ The objective of our product, Chenly Insights, is to help users combat misinform
 
 ## Dataset
 We utilized multiple different data sources to both establish the ground truth and understand factors that indicate misinformation. Generally, the more context and information you give a large language model, it can give more nuanced and thoughtful judgements on a piece of text. The data is as follows: 
-* **Liar Plus Dataset**: A publicly available dataset containing labeled statements from news sources with contextual information. After preprocessing, we have a dataset of 10,234 rows and 15 columns, with a key truthness labels **six levels from "pants-on-fire" to "true"**. Primarily used in our vector database and predictive AI training.
-![Picture of liar_plus_data](static/liar_plus_data.png) 
-* **Politifact Factchecks**: A website that factchecks articles and statements made by leaders. Used to help set the ground truth of a topic.
-![Picture of Politifact Website](static/Politifact_data.png) 
-* **Snope Factchecks**: A website that factchecks articles and statements made on the web.
-![Picture of snopes Website](static/Snopes_data.png) 
-* **User-Selected PDFs**: Article links or PDFs are analyzed with this engine and assigned a truthness label afterwards.
-![Picture of user_input_data](static/user_input_data.png) 
+* **Liar Plus Dataset**: A publicly available dataset containing labeled statements from news sources with contextual information. After preprocessing, we have a dataset of 10,234 rows and 15 columns, with a key truthness labels **six levels from "pants-on-fire" to "true"**. Primarily used in our vector database and predictive AI training. \
+![Picture of liar_plus_data](static/liar_plus_data.png) \
+* **Politifact Factchecks**: A website that factchecks articles and statements made by leaders. Used to help set the ground truth of a topic.\
+![Picture of Politifact Website](static/Politifact_data.png) \
+* **Snope Factchecks**: A website that factchecks articles and statements made on the web. \
+![Picture of snopes Website](static/Snopes_data.png) \
+* **User-Selected PDFs**: Article links or PDFs are analyzed with this engine and assigned a truthness label afterwards. \
+![Picture of user_input_data](static/user_input_data.png) \
 * **SERP API Search Results**: Google search results based on the title of the user-selected articles to provide the veracity engine with more information.
 * **Factuality Factors**: These factors determine the veracity of an article and we analyze four of them for each article: sensationalism, stance detection, social credibility, naive realism. 
 
@@ -54,22 +54,41 @@ Built and trained different models for different factuality factors
 * **Social Credibility**: Cleaned Liar Plus Dataset, one hot-encoded the speakers, context, and party affiliation, and finally built and trained a neural network model.
 ![Picture of PredAI_FC2](static/social_credibility_fc.png) 
 
+## Website
+We created a product, called Chenly Insight, a front-facting website for users to upload articles and grade them based on their perceived veracity. We utilized the predictive AI and generative AI methods listed here. If you would like to see our Figma link for the product and the poster, here it is: [Link](https://www.figma.com/design/1vaWtgLTRwwEBSDrBtEHta/DSC-180B-Designs?node-id=333-465&t=YeVJ0nUBt1QzvzpM-1). We have a couple of philosophies for our website listed below:
+* Name: The name is based off the Chinese and Vietnamese word for truth, as we want our users to feel like they are discovering the truth with our product. 
+* Color Scheme: We chose a blue to green color scheme and gradients, as it communicates trustworthiness and veracity. Additionally, we went with white, instead of black for our backgrounds, as our model is not a black box. We try to communicate all of the prompts and deciisons the model has made and have understand it through our deep analysis page 
+* Pages: 
+    * Home: Here, you can read snippets about our various sections and see example outputs of our tool on different types of articles.
+    * About Us: Here, you can learn more about the team that worked behind the project, reasoning for making the project, and for reading our report. 
+    * Prompt Testing: See the various prompting techniques and adjustments. You can see what examples of questions we ask to our generative AI. Addiitonally, you can upload your own article and grade them here
+    * Pipeline Explanation: You can see an explanation of our pipeline, along with a lucidchart of our pipeline
+    * Chenly Insights: The main tool for our product. Here, you can pick the prompting type, the adjustments you would like, and the factuality factors. After that, upload an article and then submit it for analysis. This process will take 1-2 minutes because we are asking prompts to Generative AI and running Predictive AI. Afterwards, you get results about your article and whether it is pants-on-fire to true. From there, you can choose to do a deep analysis and find more information about the article. \
+    ![Picture results](static/results_page.png) \
+    ![Picture results](static/deep_analysis_page.png) \
 
 ## Results
-![Picture results](static/accuracy_table.jpg) \
-![Picture results2](static/Naive Realism results.png)
-![Picture results3](static/accuracy_table_for_two_AI_methods.png)
+![Picture results](static/accuracy_table.png) \
+* Accuracy Table for two predictive AI Methods on different factuality factors\
+![Picture results3](static/accuracy_table_for_two_AI_methods.png) \ 
+*  Prompting Types with Adjustments with their MSE\
+![Picture results3](static/Naive_Realism_results.png)\
+* Scores given by human vs prompting techniques on articles bar chart
 
 
 ## Discussion
-In our project, we've attempted to follow previous work's suggestions by combining predictive and generative artificial intelligence in detecting misinformation. We successfully developed a simple hybrid system that scores articles' veracity, and this is a significant step forward in addressing the complex challenge of misinformation in a digital age. 
+In our project, we've attempted to follow previous work's suggestions by combining predictive and generative artificial intelligence in detecting misinformation. We successfully developed a simple hybrid system that scores articles' veracity, and this is a significant step forward in addressing the complex challenge of misinformation in a digital age. This product can be run by anyone using our system. 
 
-However, our results should be taken with a grain of salt, as there were issues. Depending on the human graders, the factuality factor score of a particular article could vary wildly. In an ideal world, we would have a commitee of misinformation experts (at least 10 for a good sample size) reading through articles and rating them. This will allow to choose the best prompting styles with proper adjustments in a more confident manner. 
+There are a couple issues with this current process though. The MSE is highly based on the human scores, which is only based on a sample size of 4. Ideally, we would like a team of 20 expert human graders to grade each article on a factuality factor to get an article’s true score.
+
+Our hypothesis that FCoT with VB and SERP would receive the lowest MSE is wrong. Normal prompting with VB and SERP performed the best. This could be due to a couple reasons. Looking at the bar graph, it seems like FCoT struggled to judge our onion article accurately due to its satire, despite doing well for all the other articles. Additionally, we did notice that FCoT did grade each article more critically and provided more reasoning in relation to the microfactors, so it is possible that human graders did not notice that. 
 
 ## Future Direction
-* Combined Generative AI and Predictive AI for a single factuality factor
-* Adjust prompting techniques to help LLMs achieve more human-like scoring
-* expanding more data sources to provide for LLMs to utilize
+1. Combine generative and predictive AI for a single factuality factor using agents like CrewAI.
+2. Adjust prompting techniques to help LLMs achieve more human-like scoring through longer and more specificized prompting for FCoT.
+3. Expanding more data sources, such as Washington Post Fact Checker, for our vector database.
+4. Make the website live via Google Cloud and a user inputted API keys and run jobs to perform automated scraping for our database. 
+5. Implement more factuality factors into our model to grade articles more critically. 
 
 ## Data Ethics
 **Data**:
@@ -84,3 +103,9 @@ However, our results should be taken with a grain of salt, as there were issues.
 
 ## Acknowledgements
 Calvin and Samantha thank **Dr.Arsanjani** for his mentorship and guidance throughout this project and other groups within section B01 for debugging and advice with coding throughout the project. We would also like to thank the rest of the capstone group (David Sun, Eric Gu, Eric Sun, Jade Zhou, Luran Zhang, and Yiheng Yuan), as they helped with bouncing ideas and keeping our group accountable
+
+## References
+1. Jiang, Bohan, Zhen Tan, Ayushi Nirmal, and Huan Liu. 2024. “Disinformation Detection: An Evolving Challenge in the Age of LLMs.” arXiv preprint arXiv:2309.15847. [Link]
+2. P. Qi, W. Hsu, and M. L. Lee, “Sniffer: Multimodal large language model for explainable out-of-context misinformation detection,” ar5iv, https://ar5iv.labs.arxiv.org/html/2403.03170 (accessed Nov. 3, 2024).
+3. Arsanjani. Ali, ”Alternus Vera,” https://alternusvera.wordpress.com/veracity-vectors-for-disinformation-detection (accessed 2024).
+4. Tariq60. 2018. “LIAR-PLUS.” Oct. [Link]
